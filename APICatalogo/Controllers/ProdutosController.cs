@@ -26,11 +26,22 @@ public class ProdutosController : ControllerBase
         return produtos;
     }
 
-    [HttpGet("{id:int}")]
-    public ActionResult<Produto> Get(int id)
+    [HttpGet("{id:int}", Name ="ObterProduto")]
+    public IActionResult Get(int id)
     {
         var produto = _context.Produtos.Find(id);
         if (produto is null) return NotFound("Produto não encontrado");
-        return produto;
+        return Ok(produto);
+    }
+
+    public ActionResult Post(Produto produto)
+    {
+        if (produto is null) return BadRequest();
+
+        _context.Produtos.Add(produto);
+        _context.SaveChanges();
+
+        return new CreatedAtRouteResult("ObterProduto",
+            new { id = produto.ProdutoId }, produto);
     }
 }
