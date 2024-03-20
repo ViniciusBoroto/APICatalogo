@@ -1,1 +1,1 @@
-# API de um Cataloho para e-commerce
+# API de um Catalogo para e-commerce
