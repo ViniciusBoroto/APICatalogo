@@ -31,7 +31,7 @@ public class CategoriasController : ControllerBase
     [HttpGet("{id:int}", Name ="ObterCategoria")]
     public ActionResult<Categoria> Get(int id) 
     {
-        var categoria = _context.Categorias.FirstOrDefault(p => p.CategoriaId == id);
+        var categoria = _context.Categorias.FirstOrDefault(p => p.CategoriaId == id); 
 
         if (categoria == null) 
             return NotFound("Categoria não encontrada...");
