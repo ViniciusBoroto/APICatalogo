@@ -19,7 +19,7 @@ public class CategoriasController : ControllerBase
     [HttpGet]
     public ActionResult<IEnumerable<Categoria>> Get()
     {
-        return _context.Categorias.ToList();
+        return _context.Categorias.Take(5).AsNoTracking().ToList();
     }
 
     [HttpGet("Produtos")]
