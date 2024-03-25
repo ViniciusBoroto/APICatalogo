@@ -25,13 +25,13 @@ public class CategoriasController : ControllerBase
     [HttpGet("Produtos")]
     public ActionResult<IEnumerable<Categoria>> GetCategoriasProdutos()
     {
-        return _context.Categorias.Include(x => x.Produtos).ToList();
+        return _context.Categorias.Include(x => x.Produtos.Take(5)).Take(5).ToList();
     }
 
     [HttpGet("{id:int}", Name ="ObterCategoria")]
     public ActionResult<Categoria> Get(int id) 
     {
-        var categoria = _context.Categorias.FirstOrDefault(p => p.CategoriaId == id); 
+        var categoria = _context.Categorias.AsNoTracking().FirstOrDefault(p => p.CategoriaId == id); 
 
         if (categoria == null) 
             return NotFound("Categoria não encontrada...");

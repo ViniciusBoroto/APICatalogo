@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace APICatalogo.Controllers;
-[Route("[controller]")]
+[Route("api/[controller]")]
 [ApiController]
 public class ProdutosController : ControllerBase
 {
@@ -16,10 +16,10 @@ public class ProdutosController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Produto>> Get()
+    public async Task<ActionResult<IEnumerable<Produto>>> GetAsync()
     {
-        var produtos = _context.Produtos.Take(10).AsNoTracking().ToList();
-        if (produtos is null) 
+       var produtos = await _context.Produtos.Take(10).AsNoTracking().ToListAsync();
+        if (produtos is null)
         {
             return NotFound("Produtos não encontrados...");
         }
@@ -27,9 +27,9 @@ public class ProdutosController : ControllerBase
     }
 
     [HttpGet("{id:int}", Name ="ObterProduto")]
-    public IActionResult Get(int id)
+    public async Task<IActionResult> GetAsync(int id)
     {
-        var produto = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id);
+        var produto = await _context.Produtos.AsNoTracking().FirstOrDefaultAsync(p => p.ProdutoId == id);
         if (produto is null) return NotFound("Produto não encontrado");
         return Ok(produto);
     }
